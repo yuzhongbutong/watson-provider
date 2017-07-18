@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Example - Watson Text to Speech</title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="container">
+    <a href="/">&laquo; Examples</a>
+
+    <section>
+        <h2>Basic Text to Speech Example</h2>
+        <textarea id="text" rows="6" cols="80">Hello from IBM Watson</textarea>
+        <p>
+            <button id="button">Synthesize Text</button>
+        </p>
+    </section>
+<script src="/watson-speech/dist/watson-speech.js"></script>
+<!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
+<script src="/fetch/fetch.js"></script>
+<script type="text/javascript">
+var token;
+var getToken = function (callback) {
+    fetch('/api/speech/token/tts').then(function (response) {
+        return response.text();
+    }).then(function (result) {
+        token = result;
+        callback(result);
+    });
+};
+
+var getAudio = function (token) {
+    WatsonSpeech.TextToSpeech.synthesize({
+        text: document.querySelector('#text').value,
+        token: token
+    }).on('error', function (err) {
+        console.log('audio error: ', err);
+    });
+};
+
+document.querySelector('#button').onclick = function () {
+    if (!token) {
+        getToken(getAudio);
+    } else {
+        getAudio(token);
+    }
+};
+</script>
+</div>
+</body>
+</html>

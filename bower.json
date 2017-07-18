@@ -1,0 +1,22 @@
+{
+  "name": "watson-provider",
+  "description": "",
+  "main": "",
+  "authors": [
+    "dlzhaojy <dlzhaojy@cn.ibm.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "watson-speech": "0.33.1",
+    "fetch": "2.0.3"
+  }
+}
