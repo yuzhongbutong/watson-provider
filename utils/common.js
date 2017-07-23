@@ -1,6 +1,3 @@
-var cfenv = require('cfenv');
-var secretConfig = require('./config-secret.json');
-
 Array.prototype.contains = function (obj) {
     var i = this.length;
     while (i--) {
@@ -32,16 +29,3 @@ Date.prototype.format = function (format) {
     }
     return format;
 };
-
-exports.getServices = function (key) {
-    var appEnv = cfenv.getAppEnv();
-    var services = appEnv.services[key];
-    if (!services) {
-        services = secretConfig[key];
-    }
-    return services;
-}
-
-exports.getProperty = function (key) {
-    return process.env.WORKSPACE_ID || secretConfig[key];
-}

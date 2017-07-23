@@ -5,13 +5,11 @@ exports.getExpress = function(req, res, next) {
     res.render('index', { title: 'Express' });
 };
 
-var workspace = common.getProperty('WORKSPACE_ID');
-
 var context = {};
 
 exports.getConversation = function(req, res, next) {
     var payload = {
-        workspace_id: workspace,
+        workspace_id: process.env.WORKSPACE_ID,
         context: context,
         input: {
             text: req.body.inputText

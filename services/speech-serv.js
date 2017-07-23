@@ -5,9 +5,11 @@ var extend = (extend = require('util')._extend);
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var configSecret = require('../utils/config-secret.json');
 
+var stt_credentials = vcapServices.getCredentials('speech_to_text');
+var tts_credentials = vcapServices.getCredentials('text_to_speech');
 var speech_to_text = new SpeechToTextV1({
-    username: configSecret.stt_credentials.username,
-    password: configSecret.stt_credentials.password
+    username: stt_credentials.username || process.env.SPEECH_TO_TEXT_USERNAME,
+    password: stt_credentials.password || process.env.SPEECH_TO_TEXT_PASSWORD
 });
 
 var params = {
@@ -18,20 +20,20 @@ var speechConfig = {
     stt: extend(
         {
             version: 'v1',
-            url: configSecret.stt_credentials.url,
-            username: process.env.STT_USERNAME || configSecret.stt_credentials.username,
-            password: process.env.STT_PASSWORD || configSecret.stt_credentials.password
+            url: stt_credentials.url || configSecret.stt_url,
+            username: stt_credentials.username || process.env.SPEECH_TO_TEXT_USERNAME,
+            password: stt_credentials.password || process.env.SPEECH_TO_TEXT_PASSWORD
         },
-        vcapServices.getCredentials('speech_to_text')
+        stt_credentials
     ),
     tts: extend(
         {
             version: 'v1',
-            url: configSecret.tts_credentials.url,
-            username: process.env.TTS_USERNAME || configSecret.tts_credentials.username,
-            password: process.env.TTS_PASSWORD || configSecret.tts_credentials.password
+            url: tts_credentials.url || configSecret.tts_url,
+            username: tts_credentials.username || process.env.TEXT_TO_SPEECH_USERNAME,
+            password: tts_credentials.password || process.env.TEXT_TO_SPEECH_PASSWORD
         },
-        vcapServices.getCredentials('text_to_speech')
+        tts_credentials
     )
 };
 

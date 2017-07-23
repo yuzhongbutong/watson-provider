@@ -1,11 +1,12 @@
 var Conversation = require('watson-developer-cloud/conversation/v1');
-var common = require('../utils/common');
+var vcapServices = require('vcap_services');
+var configSecret = require('../utils/config-secret.json');
 
-var credentials = common.getServices('conversation')[0].credentials;
+var credentials = vcapServices.getCredentials('conversation');
 var conversation = new Conversation({
-    username: credentials.username,
-    password: credentials.password,
-    url: credentials.url,
+    username: credentials.username || process.env.CONVERSATION_USERNAME,
+    password: credentials.password || process.env.CONVERSATION_PASSWORD,
+    url: credentials.url || configSecret.conversation_url,
     version_date: Conversation.VERSION_DATE_2017_04_21
 });
 
