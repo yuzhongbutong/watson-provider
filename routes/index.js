@@ -1,10 +1,17 @@
 var express = require('express');
+var alexa = require("alexa-app");
 var multer = require ('multer');
 var speechTokenCtrl = require('../controllers/speech-ctrl');
 var conversationCtrl = require('../controllers/conversation-ctrl');
+var alexaConversationCtrl = require("../controllers/alexa/conversation-ctrl");
 var router = express.Router();
+var app = new alexa.app("alexa/api");
 
 var upload = multer({ dest:  "../temp" });
+
+
+app.intent("conversationIntent", alexaConversationCtrl.getConversation);
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,4 +30,5 @@ router.get('/api/speech/token/:category', speechTokenCtrl.getSpeechToken);
 
 router.post('/api/conversation', conversationCtrl.getConversation);
 
+app.express({router: router, checkCert: false, debug: true});
 module.exports = router;
