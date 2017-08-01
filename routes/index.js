@@ -9,6 +9,7 @@ var app = new alexa.app("alexa/api");
 
 var upload = multer({ dest:  "../temp" });
 
+app.launch(alexaConversationCtrl.getLaunch);
 
 app.intent("conversationIntent", alexaConversationCtrl.getConversation);
 
