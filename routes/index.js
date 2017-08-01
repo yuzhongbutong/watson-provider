@@ -13,6 +13,10 @@ app.launch(alexaConversationCtrl.getLaunch);
 
 app.intent("conversationIntent", alexaConversationCtrl.getConversation);
 
+app.intent("AMAZON.StopIntent", alexaConversationCtrl.stopConversation);
+
+app.intent("AMAZON.CancelIntent", alexaConversationCtrl.cancelConversation);
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

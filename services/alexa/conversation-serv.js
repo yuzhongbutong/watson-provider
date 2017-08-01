@@ -11,9 +11,9 @@ var conversation = new Conversation({
     version_date: Conversation.VERSION_DATE_2017_04_21
 });
 
-var context = {};
-
 exports.getConversation = function (request, response) {
+    var session = request.getSession();
+    var context = session.get('alexaContext');
     var inputText = request.slot('word');
     var payload = {
         workspace_id: process.env.WORKSPACE_ID,
@@ -27,7 +27,7 @@ exports.getConversation = function (request, response) {
             if (err) {
                 fail(err);
             } else {
-                context = data.context;
+                session.set('alexaContext', data.context);
                 resolve(data);
             }
         });
