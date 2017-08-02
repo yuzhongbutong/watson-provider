@@ -9,7 +9,7 @@ exports.getConversation = function(request, response) {
     response.shouldEndSession(false);
     console.log(request.sessionId);
     return conversationServ.getConversation(request, response).then(function (data) {
-        response.say(data.output.text.join('. '));
+        response.say(data.output.text.join(' '));
     }).catch(function (err) {
         console.log(err);
         response.say('Bad request.');
@@ -17,9 +17,13 @@ exports.getConversation = function(request, response) {
 };
 
 exports.stopConversation = function (request, response) {
-    response.stop();
+    var stopOutput = "Don't You Worry. I'll be back.";
+    response.say(stopOutput);
+    return;
 };
 
 exports.cancelConversation = function (request, response) {
-    response.stop();
+    var cancelOutput = "No problem. Request cancelled.";
+    response.say(cancelOutput);
+    return;
 };
