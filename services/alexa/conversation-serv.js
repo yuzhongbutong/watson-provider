@@ -1,7 +1,9 @@
+var util = require('util');
 var Promise = require('bluebird');
 var vcapServices = require('vcap_services');
 var Conversation = require('watson-developer-cloud/conversation/v1');
 var configSecret = require('../../utils/config-secret.json');
+var record = require('../../data/record.json');
 
 var credentials = vcapServices.getCredentials('conversation');
 var conversation = new Conversation({
@@ -32,4 +34,15 @@ exports.getConversation = function (request, response) {
             }
         });
     });
+};
+
+exports.getDataByDate = function(params) {
+    var result = '';
+    for (var i = 0; i < record.trading_record.length; i++) {
+        var tradingRecord = record.trading_record[i];
+        if (tradingRecord.date >= params.from_date && tradingRecord.date <= params.to_date) {
+            result += util.format(' on %s you spent %s dollars in %s.', tradingRecord.date, tradingRecord.money, tradingRecord.place);
+        }
+    }
+    return result;
 }

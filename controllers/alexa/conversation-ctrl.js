@@ -7,9 +7,14 @@ exports.getLaunch = function (request, response) {
 
 exports.getConversation = function(request, response) {
     response.shouldEndSession(false);
-    console.log(request.sessionId);
     return conversationServ.getConversation(request, response).then(function (data) {
-        response.say(data.output.text.join(' '));
+        var output = conversationServ.getDataByDate(data.output.result);
+        if (output) {
+            output = data.output.text.join(' ') + output;
+        } else {
+            output = 'There is no record.'
+        }
+        response.say(output);
     }).catch(function (err) {
         console.log(err);
         response.say('Bad request.');
