@@ -46,3 +46,26 @@ exports.getDataByDate = function(params) {
     }
     return result;
 }
+
+exports.getConversationMulti = function (request, workspaceId) {
+    var session = request.getSession();
+    var context = session.get(workspaceId);
+    var inputText = request.slot('word');
+    var payload = {
+        workspace_id: workspaceId,
+        context: context,
+        input: {
+            text: inputText
+        }
+    };
+    return new Promise(function(resolve, fail){
+        conversation.message(payload, function(err, data) {
+            if (err) {
+                fail(err);
+            } else {
+                session.set(workspaceId, data.context);
+                resolve(data);
+            }
+        });
+    });
+};

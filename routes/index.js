@@ -13,6 +13,8 @@ app.launch(alexaConversationCtrl.getLaunch);
 
 app.intent("conversationIntent", alexaConversationCtrl.getConversation);
 
+app.intent("balanceIntent", alexaConversationCtrl.getConversationMulti);
+
 app.intent("AMAZON.StopIntent", alexaConversationCtrl.stopConversation);
 
 app.intent("AMAZON.CancelIntent", alexaConversationCtrl.cancelConversation);
