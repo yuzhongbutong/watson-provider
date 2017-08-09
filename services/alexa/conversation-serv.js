@@ -41,7 +41,7 @@ exports.getDataByDate = function(params) {
     for (var i = 0; i < record.trading_record.length; i++) {
         var tradingRecord = record.trading_record[i];
         if (tradingRecord.date >= params.from_date && tradingRecord.date <= params.to_date) {
-            result += util.format(' on %s you spent %s dollars in %s.', tradingRecord.date, tradingRecord.money, tradingRecord.place);
+            result += util.format(' on %s %s yen was transferred out.', tradingRecord.date, tradingRecord.money);
         }
     }
     return result;
